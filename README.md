@@ -28,8 +28,10 @@ Projeto construido para vaga de Fullstack
 ## Tecnologias utilizadas
 
 - Vue.js
+- Vue-router
 - Axios
 - Sass
+- Moment
 
 ## Autor
 
