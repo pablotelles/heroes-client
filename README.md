@@ -1,6 +1,6 @@
 # Heros-client
 
-Breve descrição do projeto.
+Descrição
 Projeto construido para vaga de Fullstack
 
 ## Instalação
