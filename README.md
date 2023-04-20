@@ -1,24 +1,36 @@
-# heros-client
+# Heros-client
 
-## Project setup
-```
-npm install
-```
+Breve descrição do projeto.
+Projeto construido para vaga de Fullstack
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Instalação
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Pré-requisitos
 
-### Lints and fixes files
-```
-npm run lint
-```
+- Node.js
+- npm ou yarn
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Instruções
+
+1. Clone o repositório.
+
+2. Acesse o diretório do projeto.
+   cd nome-do-repositorio
+
+3. Instale as dependências.
+   npm install ou yarn install
+
+4. Inicialize o servidor de desenvolvimento.
+   yarn serve (deve rodar na porta 8080 para conexão com o server)
+
+5. Acesse o aplicativo em seu navegador em [http://localhost:8080/](http://localhost:8080/).
+
+## Tecnologias utilizadas
+
+- Vue.js
+- Axios
+- Sass
+
+## Autor
+
+- Pablo Teles | pablotellles@gmail.com.
