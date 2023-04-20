@@ -1,6 +1,6 @@
 <template>
   <div class="character">
-    <h1>Onde os cavaleiros se encontram</h1>
+    <h1>Onde os cavaleiros nascem</h1>
     <CreateCharracter :character="character" />
   </div>
 </template>

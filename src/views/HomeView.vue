@@ -2,18 +2,18 @@
   <div class="home">
     <div class="container">
       <section>
-          <button @click="showModalCharacter = true">Criar Cavaleiro</button>
-          <CustomModal :show="showModalCharacter"
+          <button @click="showModal = true">Criar Cavaleiro</button>
+          <CustomModal :show="showModal"
                        title="Crie seu Heroi"
-                       @closeModal="() => showModalCharacter = false">
-            <CreateCharracter @updateTable="getData()" />
+                       @closeModal="() => showModal = false">
+            <CreateCharracter @updateTable="getData()" @closeModal="closeModal" />
           </CustomModal>
       </section>
     </div>
     <CustomSelect :label="'Filtros'"
                   :options="optionsFilter" 
-                  v-model="selected" 
-                  @setFilter="filteredKnights" />
+                  @setFilter="filteredKnights"
+                  value="" />
     <CharacterTable :options="characterOptions"/>
   </div>
 </template>
@@ -39,8 +39,7 @@ export default {
   data() {
     return {
       characterOptions: [],
-      showModalCharacter: false,
-      showModalWeapon: false,
+      showModal: false,
       optionsFilter: [
           { label: 'All', value: 'all' },
           { label: 'Heroes', value: 'hero' },
@@ -74,6 +73,9 @@ export default {
     },
     filteredKnights(selectedValue) {
       this.filterSelected = selectedValue
+    },
+    closeModal () {
+      this.showModal = false
     }
   },
 }

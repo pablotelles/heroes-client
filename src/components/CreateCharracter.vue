@@ -27,10 +27,11 @@
                    @setError="setError"
                    @setInput="setValue" />
       <div class="others">
-        <CustomSelect :label="'Selecione uma Arma inicial'"
+        <CustomSelect v-if="!character" 
+                      :label="'Selecione uma Arma inicial'"
                       :options="optionsWeapons"
-                      v-model="selected"
                       :disabled="character ? true : false"
+                      value=""
                       @setFilter="selectWeapon" />
         <CustomInput class="description"
                    id="description"
@@ -90,20 +91,11 @@
         this.form.birthday = moment(this.character.birthday).format('YYYY-MM-DD')
         this.form.description = this.character.description
         this.form.type = this.character.type
-      }
+        this.optionsWeapons = this.character.weapons
+      },
     },
     created () {
-      api.get('/weapons')
-        .then(res => {
-        res.data.map(item => {
-          const obj = {
-            label: `${item.name} | Mod: ${item.mod} | Attr: ${item.attr}`,
-            value: item._id,
-            // value: {name: item.name, mod: item.nod, attr: item.attr, equipped: true, description: item.description}
-          }
-          this.optionsWeapons.push(obj)
-        })
-      })
+      return this.getWeapons()
     },
     methods: {
       setValue (type, value) {
@@ -121,6 +113,7 @@
           }, "3000")
         }
         await api.post('/knigthts', this.form)
+        this.closeModal()
         this.$emit('updateTable')
       },
       async updateChar () {
@@ -132,12 +125,32 @@
           }, "3000")
         }
         if (this.character) await api.put(`/knigthts/${this.character._id}`, this.form)
+        this.$router.push('/')
       },
       async deleteChar () {
         if (this.character) await api.delete(`/knigthts/${this.character._id}`, this.form)
       },
       selectWeapon(selectedValue) {
         this.form.weaponId = selectedValue
+      },
+      getWeapons() {
+        api.get('/weapons')
+        .then(res => {
+        res.data.map(item => {
+          const obj = {
+            label: `${item.name} | Mod: ${item.mod} | Attr: ${item.attr}`,
+            value: item._id,
+            // value: {name: item.name, mod: item.nod, attr: item.attr, equipped: true, description: item.description}
+          }
+          this.optionsWeapons.push(obj)
+        })
+      })
+      },
+      setEditWeapons () {
+         this.character.weapons.forEach(item => this.optionsWeapons.push(item))
+      },
+      closeModal () {
+        this.$emit('closeModal')
       }
     }
   }
