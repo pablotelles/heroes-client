@@ -13,7 +13,7 @@ export function calculateAge(date) {
     return roundedAge;
 }
 
-export function calculeteXpKnight(age) {
+export function calculateXpKnight(age) {
     if (age < 7) {
       return 0;
     } else {
@@ -21,7 +21,7 @@ export function calculeteXpKnight(age) {
     }
 }
 
-export function calculeteAttack(knight) {
+export function calculateAttack(knight) {
     const modValues = [-2,-2,-2,-2,-2,-2,-2,-2,-1,-1,0,0,1,1,1,2,2,2,3,3];
     const equippedWeapon = knight.weapons.length ? knight.weapons.find(weapon => weapon.equipped) : 0;
     const keyAttr = knight.attributes[knight.keyAttribute]

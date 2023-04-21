@@ -30,7 +30,7 @@
   </template>
   
   <script>
-  import { calculateAge, calculeteXpKnight, calculeteAttack } from '@/utils/calculates'
+  import { calculateAge, calculateXpKnight, calculateAttack } from '@/utils/calculates'
 
   export default {
     name: 'CharacterTable',
@@ -46,10 +46,10 @@
         return calculateAge(date)
       },
       handleXp (age) {
-        return calculeteXpKnight(age)
+        return calculateXpKnight(age)
       },
       handleAttack (knight) {
-        const attack = calculeteAttack(knight)
+        const attack = calculateAttack(knight)
         return attack
       },
       redirectToItem(itemId) {

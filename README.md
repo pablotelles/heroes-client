@@ -1,4 +1,4 @@
-# Heros-client
+# heroes-client
 
 ## Instalação
 
