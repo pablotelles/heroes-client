@@ -6,7 +6,7 @@ const validateInput = {
             return value
         },
         validate (value) {
-            if (value && value.length > 3) return false
+            if (value && value.length >= 3) return false
             return true
         }
     }

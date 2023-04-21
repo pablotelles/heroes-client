@@ -27,11 +27,10 @@
                    @setError="setError"
                    @setInput="setValue" />
       <div class="others">
-        <CustomSelect v-if="!character" 
+        <CustomSelect 
                       :label="'Selecione uma Arma inicial'"
-                      :options="optionsWeapons"
-                      :disabled="character ? true : false"
-                      value=""
+                      :options="character ? form.weapons : optionsWeapons"
+                      :value="character ? form.weapons.filter((item) => item.equipped = true) : null"
                       @setFilter="selectWeapon" />
         <CustomInput class="description"
                    id="description"
@@ -53,16 +52,16 @@
 </template>
   
 <script>
-  import CustomInput from './CustomInput.vue';
+  import CustomInput from '../CustomInput.vue';
   import { api } from '@/api/api';
   import moment from 'moment';
-  import CustomSelect from './CustomSelect.vue';
+  import CustomSelect from '../CustomSelect.vue';
 
   export default {
     name: 'CreateCharcterer',
     components: {
       CustomInput,
-      CustomSelect
+      CustomSelect,
     },
     props: {
       character: {type: Object, default: null}
@@ -85,18 +84,15 @@
       }
     },
     watch: {
-      character () {
-        this.form.name = this.character.name
-        this.form.nickname = this.character.nickname
+      character () {        
+        this.form = this.character
         this.form.birthday = moment(this.character.birthday).format('YYYY-MM-DD')
-        this.form.description = this.character.description
-        this.form.type = this.character.type
-        this.optionsWeapons = this.character.weapons
+        this.setCharacterWeapons()
       },
     },
     created () {
-      return this.getWeapons()
-    },
+      this.getWeapons()
+    },    
     methods: {
       setValue (type, value) {
         this.form[type] = value
@@ -134,20 +130,32 @@
         this.form.weaponId = selectedValue
       },
       getWeapons() {
+        console.log('getWeapons')
         api.get('/weapons')
         .then(res => {
         res.data.map(item => {
           const obj = {
             label: `${item.name} | Mod: ${item.mod} | Attr: ${item.attr}`,
             value: item._id,
-            // value: {name: item.name, mod: item.nod, attr: item.attr, equipped: true, description: item.description}
+              // value: {name: item.name, mod: item.nod, attr: item.attr, equipped: true, description: item.description}
           }
           this.optionsWeapons.push(obj)
         })
       })
       },
-      setEditWeapons () {
-         this.character.weapons.forEach(item => this.optionsWeapons.push(item))
+      setCharacterWeapons () {
+        console.log('setEditWeapons')
+         this.character.weapons.forEach(item => {
+          this.form.weapons = []
+          const obj = {
+            label: `${item.name} | Mod: ${item.mod} | Attr: ${item.attr}`,
+            value: item._id,
+            selected: item.equipped
+            // value: {name: item.name, mod: item.nod, attr: item.attr, equipped: true, description: item.description}
+          }
+          this.form.weapons.push(obj)
+          console.log(this.form)
+         })
       },
       closeModal () {
         this.$emit('closeModal')
@@ -157,7 +165,8 @@
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/mixins.sass';
+@import '../../styles/mixins.sass';
+
   form {
     display: flex;
     flex-wrap: wrap;

@@ -2,10 +2,10 @@
     <div class="container">
       <label>{{ label }}</label>
       <select class="select"
-             v-model="selected"
+              v-model="selected"
              :disabled="disabled"
              @change="handleChange">
-        <option v-for="(option, index) in options" :value="option.value" :key="index">
+        <option v-for="(option, index) in options" :value="option.value" :key="index" :selected="option.selected">
           {{ option.label }}
         </option>
       </select>
@@ -35,8 +35,8 @@
     },
     data() {
       return {
-        selected: this.value
-      };
+        selected: null,
+      }
     },
     methods: {
       handleChange() {

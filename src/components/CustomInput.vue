@@ -31,7 +31,7 @@ export default {
       default: "text"
     },
     InitialValue: {
-      type: [String, Number],
+
       default: ""
     },
     require: {
@@ -57,6 +57,9 @@ export default {
     value () {
       this.errorState = null
     }
+  },
+  created () {
+    this.value = this.InitialValue
   },
   methods: {
     setValue (ev) {

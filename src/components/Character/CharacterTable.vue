@@ -60,7 +60,7 @@
   </script>
 
 <style lang="scss" scoped>
-@import '../styles/mixins.sass';
+@import '../../styles/mixins.sass';
 
   table {
     @include table;

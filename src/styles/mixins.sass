@@ -1,31 +1,37 @@
-@mixin page
+@import './variables'
+
+@mixin page 
     display: flex
     flex-direction: column
-    align-items: center
+
     padding: 0 10%
+
 
 @mixin footer-modal
     display: flex
     justify-content: flex-end
     padding: 1rem 0 .5rem 0
 
+
 @mixin button-open-modal
     padding: 10px 40px
     font-size: 20px
-    background-color: #007bff
-    color: white
+    background-color: $color-button
+    color: black
     border: none
     border-radius: 5px
     cursor: pointer
 
+
 @mixin button-open-create
     padding: 10px 40px
     font-size: 20px
-    background-color: #8f1ad7
-    color: white
+    background-color: $color-button
+    color: black
     border: none
     border-radius: 5px
     cursor: pointer
+
 
 @mixin button-delete
     padding: 10px 40px
@@ -36,6 +42,17 @@
     border-radius: 5px
     cursor: pointer
 
+@mixin button-open-equip
+    padding: 5px 20px
+    font-size: 20px
+    background-color: $color-button
+    color: black
+    font-weight: bold
+    border: none
+    border-radius: 5px
+    cursor: pointer
+
+
 @mixin button-edit
     padding: 10px 40px
     font-size: 20px
@@ -45,12 +62,14 @@
     border-radius: 5px
     cursor: pointer
 
+
 @mixin close-icon-modal
     display: flex
     float: right
     max-width: 40px
     max-height: 40px
-    img: contain
+    img
+        contain: contain
         line-height: 20px
         text-align: center
         border-radius: 50%
@@ -60,8 +79,11 @@
         font-size: 32px
         cursor: pointer
         margin-right: 10px
+    
+
 
 @mixin input-forms
+    width: 100%
     font-family: Arial, sans-serif
     font-size: 20px
     color: #333
@@ -76,31 +98,38 @@
         background-color: #f2f2f2
         color: #b3b3b3
         cursor: not-allowed
+    
+
 
 @mixin label-forms
     text-align: left
     font-family: Arial, sans-serif
     font-size: 20px
-    color: #333
+    color: $labels-form
+
 
 @mixin error-forms
     text-align: left
     font-size: 16px
     color: #dc2020
 
+
 @mixin table
     width: 100%
     border-collapse: collapse
     margin-bottom: 20px
 
-    th, td
-        padding: 10px
-        text-align: left
-        vertical-align: top
-        border: 1px solid #ddd
 
-    th
-        font-weight: bold
+table th, table td
+    padding: 10px
+    text-align: left
+    vertical-align: top
+    border: 1px solid #ddd
 
-    tr:nth-child(even)
-        background-color: #f2f2f2
+
+table th
+    font-weight: bold
+
+
+table tr:nth-child(even)
+    background-color: #f2f2

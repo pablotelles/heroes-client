@@ -4,7 +4,7 @@
       <section>
           <button @click="showModal = true">Criar Cavaleiro</button>
           <CustomModal :show="showModal"
-                       title="Crie seu Heroi"
+                       title="Crie seu Personagem"
                        @closeModal="() => showModal = false">
             <CreateCharracter @updateTable="getData()" @closeModal="closeModal" />
           </CustomModal>
@@ -22,9 +22,9 @@
 
 
 //Components
-import CharacterTable from '@/components/CharacterTable.vue';
+import CharacterTable from '@/components/Character/CharacterTable.vue';
 import CustomModal from '@/components/CustomModal'
-import CreateCharracter from '@/components/CreateCharracter.vue';
+import CreateCharracter from '@/components/Character/CreateCharracter.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
 
 import { api } from '@/api/api';

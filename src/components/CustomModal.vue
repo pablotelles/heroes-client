@@ -27,15 +27,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '../styles/mixins.sass';
-
-  img {
-    @include close-icon-modal;
-  }
-</style>
-
 <style lang="sass" scoped>
+  @import '../styles/mixins.sass'
+  @import '../styles/variables'
+
+  img 
+    @include close-icon-modal
+ 
 
   .modal
     position: fixed
@@ -47,14 +45,18 @@ export default {
     display: flex
     justify-content: center
     align-items: center
-    &-content
+    background-color: $color-background-modal
+
+    &-content 
       background-color: white
       min-width: 70%
       min-height: 30%
       padding: 20px
       border-radius: 5px
       box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3)
-      .title
+      background-color: $color-background-modal
+
+      .title 
         display: block
         font-family: Arial
         text-align: left
@@ -62,6 +64,5 @@ export default {
         font-weight: bold
         color: #333
         margin-bottom: 10px
-
-
+        color: $color-text
 </style>
