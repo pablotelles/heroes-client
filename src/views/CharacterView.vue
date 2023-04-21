@@ -1,14 +1,23 @@
 <template>
   <div v-if="character" class="character">
-    <!-- <CreateCharracter :character="character" /> -->
     <div class="char-header">
-       <h2 class="char-name">{{ character.name + ', ' + getAge(character.birthday) }}</h2>
-       <p class="char-nickname" >{{ `@${character.nickname}` }}</p>
-       <p class="char-status" >{{ capitalize(character.status) }}</p>  
+      <div>
+        <h2 class="char-name">{{ character.name + ', ' + getAge(character.birthday) }}</h2>
+        <p class="char-nickname" >{{ `@${character.nickname}` }}</p>
+        <p class="char-status" >{{ capitalize(character.status) }}</p>  
+      </div>
       <div class="char-description">
         <img src="../assets/icons/charIcon.png" alt="">
         <p>{{ character.description }}</p>
       </div>
+      <button @click="showModal = true">Editar</button>
+      <CustomModal :show="showModal"
+                       title="Editar"
+                       @closeModal="() => showModal = false" >
+            <CreateCharracter :character="character"
+                              @updateTable="getData()"
+                              @closeModal="() => showModal = false" />
+      </CustomModal>    
     </div>
     <div class="secundary-box"> 
       <CharacterAtributtes class="attributes"
@@ -30,40 +39,43 @@ import { calculateAge } from '@/utils/calculates'
 import { capitalizeFirstLetter } from '@/utils/comuns'
 
 // Components
-// import CreateCharracter from '@/components/CreateCharracter.vue'
+import CreateCharracter from '@/components/Character/CreateCharracter.vue'
+import CustomModal from '@/components/CustomModal.vue'
 import CharacterAtributtes from '@/components/Character/CharacterAtributtes.vue'
 import CharacterWeaponsVue from '@/components/Character/CharacterWeapons.vue'
 
 export default {
   name: 'CharacterView',
   components: {
-    // CreateCharracter,
+    CreateCharracter,
     CharacterWeaponsVue,
-    CharacterAtributtes
+    CharacterAtributtes,
+    CustomModal
   },
   data() {
     return {
       character: null,
+      showModal: false
     }
   },
   created() {
     this.getCharacter()
   },
   methods: {
-    getAge (age) {
-      return calculateAge(age)
-    },
-    capitalize (value) {
-      return capitalizeFirstLetter(value)
-    },
-    getCharacter() {
-      const id = this.$route.params.id
-      if (id) {
-        api.get(`/knigthts/${id}`).then(response => {
-        this.character = response.data
-      })
-    }
-    }
+      getAge (age) {
+        return calculateAge(age)
+      },
+      capitalize (value) {
+        return capitalizeFirstLetter(value)
+      },
+      getCharacter() {
+        const id = this.$route.params.id
+        if (id) {
+          api.get(`/knigthts/${id}`).then(response => {
+          this.character = response.data
+          })
+        }
+      },
   },
 }
 </script>
@@ -71,10 +83,18 @@ export default {
   @import '../styles/variables'
   @import '../styles/mixins'
   .character
-    @include page
+    @include page    
     .char-header
       display: flex
-      flex-direction: column
+      align-items: center
+      justify-content: space-between
+      gap: 2rem
+      button
+        @include button-open-modal
+        flex-grow: 1
+        width: 150px
+        height: 50px
+
       justify-content: flex-start
       .char-personal-data
       .char-name
@@ -102,6 +122,7 @@ export default {
       gap: 2rem
       .weapons
         flex-grow: 1
+
       
     
       

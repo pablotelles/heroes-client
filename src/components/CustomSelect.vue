@@ -26,7 +26,6 @@
       },
       value: {
         type: String,
-        required: true
       },
       disabled: {
         type: Boolean, 

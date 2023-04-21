@@ -21,6 +21,7 @@ export default {
   },
   methods: {
     close() {
+      console.log('close')
       this.$emit('closeModal')
     }
   }
@@ -41,21 +42,17 @@ export default {
     left: 0
     width: 100%
     height: 100%
-    background-color: rgba(0, 0, 0, 0.5)
     display: flex
     justify-content: center
     align-items: center
     background-color: $color-background-modal
 
-    &-content 
-      background-color: white
+    &-content   
       min-width: 70%
       min-height: 30%
-      padding: 20px
       border-radius: 5px
-      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3)
-      background-color: $color-background-modal
-
+      box-shadow: $box-shadow
+      padding: 1.5rem
       .title 
         display: block
         font-family: Arial

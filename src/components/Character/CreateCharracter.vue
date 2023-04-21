@@ -27,10 +27,9 @@
                    @setError="setError"
                    @setInput="setValue" />
       <div class="others">
-        <CustomSelect 
+        <CustomSelect v-if="!character"
                       :label="'Selecione uma Arma inicial'"
-                      :options="character ? form.weapons : optionsWeapons"
-                      :value="character ? form.weapons.filter((item) => item.equipped = true) : null"
+                      :options="optionsWeapons"                      
                       @setFilter="selectWeapon" />
         <CustomInput class="description"
                    id="description"
@@ -84,13 +83,18 @@
       }
     },
     watch: {
-      character () {        
+      character () {       
+        console.log('oi') 
         this.form = this.character
         this.form.birthday = moment(this.character.birthday).format('YYYY-MM-DD')
-        this.setCharacterWeapons()
       },
     },
     created () {
+      if(this.character) {
+        this.form = this.character
+        this.form.birthday = moment(this.character.birthday).format('YYYY-MM-DD')
+      }
+      console.log('oi') 
       this.getWeapons()
     },    
     methods: {
@@ -121,10 +125,11 @@
           }, "3000")
         }
         if (this.character) await api.put(`/knigthts/${this.character._id}`, this.form)
-        this.$router.push('/')
+        this.closeModal()
       },
       async deleteChar () {
         if (this.character) await api.delete(`/knigthts/${this.character._id}`, this.form)
+        this.closeModal()
       },
       selectWeapon(selectedValue) {
         this.form.weaponId = selectedValue
@@ -142,20 +147,6 @@
           this.optionsWeapons.push(obj)
         })
       })
-      },
-      setCharacterWeapons () {
-        console.log('setEditWeapons')
-         this.character.weapons.forEach(item => {
-          this.form.weapons = []
-          const obj = {
-            label: `${item.name} | Mod: ${item.mod} | Attr: ${item.attr}`,
-            value: item._id,
-            selected: item.equipped
-            // value: {name: item.name, mod: item.nod, attr: item.attr, equipped: true, description: item.description}
-          }
-          this.form.weapons.push(obj)
-          console.log(this.form)
-         })
       },
       closeModal () {
         this.$emit('closeModal')

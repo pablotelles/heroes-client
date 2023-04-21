@@ -5,6 +5,7 @@ const validateInput = {
             // it is possible to change the data type before returning to the parent component
             return value
         },
+        customMsg: '',
         validate (value) {
             if (value && value.length >= 3) return false
             return true
