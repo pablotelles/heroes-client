@@ -2,7 +2,7 @@
   <div v-if="character" class="character">
     <div class="char-header">
       <div>
-        <h2 class="char-name">{{ character.name + ', ' + getAge(character.birthday) }}</h2>
+        <h2 class="char-name">{{ character.name + ', ' + character.calculateAge() }}</h2>
         <p class="char-nickname" >{{ `@${character.nickname}` }}</p>
         <p class="char-status" >{{ capitalize(character.status) }}</p>  
       </div>
@@ -34,8 +34,10 @@
 <script>
 import { api } from '@/api/api'
 
+// Classes
+import Character from '../Classes/Character'
+
 // Utils
-import { calculateAge } from '@/utils/calculates'
 import { capitalizeFirstLetter } from '@/utils/comuns'
 
 // Components
@@ -62,9 +64,6 @@ export default {
     this.getCharacter()
   },
   methods: {
-      getAge (age) {
-        return calculateAge(age)
-      },
       capitalize (value) {
         return capitalizeFirstLetter(value)
       },
@@ -72,7 +71,8 @@ export default {
         const id = this.$route.params.id
         if (id) {
           api.get(`/knigthts/${id}`).then(response => {
-          this.character = response.data
+          const CharacterClass = new Character(response.data)
+          this.character = CharacterClass
           })
         }
       },

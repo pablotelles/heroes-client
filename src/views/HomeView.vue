@@ -19,7 +19,10 @@
 </template>
 
 <script>
+import { api } from '@/api/api';
 
+// Class
+import Character from '../Classes/Character'
 
 //Components
 import CharacterTable from '@/components/Character/CharacterTable.vue';
@@ -27,7 +30,7 @@ import CustomModal from '@/components/CustomModal'
 import CreateCharracter from '@/components/Character/CreateCharracter.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
 
-import { api } from '@/api/api';
+
 export default {
   name: 'HomeView',
   components: {
@@ -60,7 +63,8 @@ export default {
           status: this.filterSelected
         }
       })
-      this.characterOptions = response.data;
+      const CharactersClass = response.data.map((char) => new Character(char)) 
+      this.characterOptions = CharactersClass;
     }
     },
   methods: {
@@ -69,7 +73,9 @@ export default {
     },
     async getData() {
       const response = await api.get('/knigthts');
-      this.characterOptions = response.data;
+      if(!response) return
+      const CharactersClass = response.data.map((char) => new Character(char)) 
+      this.characterOptions = CharactersClass;
     },
     filteredKnights(selectedValue) {
       this.filterSelected = selectedValue

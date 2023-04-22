@@ -39,7 +39,7 @@
   </template>
   
   <script>
-  import { api } from '../../api/api'
+  // import { api } from '../../api/api'
   export default {
     props: {
       character: {
@@ -52,8 +52,7 @@
         weapon.equipped = !weapon.equipped
       },
       async halndleEquipped(weapon) {
-        const payload = {weaponId: weapon._id, charId: this.character._id}
-        await api.post('/weapons/equpped', payload)
+        await weapon.equipWeapon()        
         this.updateData()
       },
       updateData () {

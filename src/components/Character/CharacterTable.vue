@@ -18,11 +18,11 @@
               @click="redirectToItem(character._id)" >
             <td>{{ character.name }}</td>
             <td>{{ character.status }}</td>
-            <td>{{ handleAge(character.birthday) }}</td>
+            <td>{{ character.calculateAge() }}</td>
             <td>{{ character.weapons.length }}</td>
             <td>{{ character.keyAttribute }}</td>
-            <td>{{ handleAttack(character)}}</td>
-            <td>{{ handleXp(handleAge(character.birthday)) }}</td>
+            <td>{{ character.calculateAttack()}}</td>
+            <td>{{character.calculateXp() }}</td>
           </tr>
         </tbody>
       </table>
@@ -30,7 +30,7 @@
   </template>
   
   <script>
-  import { calculateAge, calculateXpKnight, calculateAttack } from '@/utils/calculates'
+ 
 
   export default {
     name: 'CharacterTable',
@@ -42,16 +42,6 @@
       }
     },
     methods: {
-      handleAge (date) {
-        return calculateAge(date)
-      },
-      handleXp (age) {
-        return calculateXpKnight(age)
-      },
-      handleAttack (knight) {
-        const attack = calculateAttack(knight)
-        return attack
-      },
       redirectToItem(itemId) {
         this.$router.push(`/character/${itemId}`)
       },

@@ -1,8 +1,8 @@
 const validateInput = {
     required: {
-        regx: '', // It is possible to fixed a regex code to use in validate
+        regx: '', // It's possible to fixed a regex code to use in validate
         value (value) {
-            // it is possible to change the data type before returning to the parent component
+            // it's possible to change the data type before returning to the parent component
             return value
         },
         customMsg: '',
