@@ -11,14 +11,16 @@
         <img src="../assets/icons/charIcon.png" alt="">
         <p>{{ character.description }}</p>
       </div>
-      <button @click="showModal = true">Editar</button>
-      <CustomModal :show="showModal"
+      <div>
+        <button class="btn-edit" @click="showModal = true">Editar</button>
+        <CustomModal :show="showModal"
                        title="Editar"
                        @closeModal="() => showModal = false" >
             <CreateCharracter :character="character"
                               @updateTable="getData()"
                               @closeModal="() => showModal = false" />
-      </CustomModal>    
+      </CustomModal>   
+      </div>
     </div>
     <div class="secundary-box">
       <CharacterAtributtes class="attributes"
@@ -44,7 +46,7 @@
 import { api } from '@/api/api'
 
 // Classes
-import Character from '../Classes/Character'
+import Character from '../classes/Character'
 
 // Utils
 import { capitalizeFirstLetter } from '@/utils/comuns'
@@ -90,13 +92,10 @@ export default {
           api.get(`/knigthts/${id}`).then(response => {
           const CharacterClass = new Character(response.data)
           this.character = CharacterClass
-          this.tabs[0].props.character = CharacterClass
-          this.tabs[1].props.character = CharacterClass
           })
         }
       },
       setTabIndex (index) {
-        console.log('index', index)
         this.tabIndex = index
       }
   },
@@ -109,12 +108,11 @@ export default {
     @include page    
     .char-header
       display: flex
+      justify-content: flex-end
       align-items: center
-      justify-content: space-between
       gap: 2rem
       button
         @include button-open-modal
-        flex-grow: 1
         width: 150px
         height: 50px
 
@@ -134,19 +132,19 @@ export default {
           color: $color-button 
       .char-description
         display: flex
+        width: 80%
         gap: 2rem
         align-items: center
         padding: 2rem 0
         text-align: left
         img
-          width: 100px
+          width: 100px 
     .secundary-box
       display: flex
       flex-direction: row
       gap: 2rem
+      padding: 1rem 0
       .weapons
-        flex-grow: 1     
-    
-      
+        flex-grow: 1       
 
 </style>

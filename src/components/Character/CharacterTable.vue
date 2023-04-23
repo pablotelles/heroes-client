@@ -17,6 +17,7 @@
         <tbody>
           <tr v-for="(character, index) in options"
               :key="index"
+              class="active-row"
               @click="redirectToItem(character._id)" >
             <td>{{ character.name }}</td>
             <td>{{ character.status }}</td>
@@ -54,6 +55,7 @@
   </script>
 
 <style lang="sass" scoped>
+@import '../../styles/variables'
 @import '../../styles/mixins.sass'
 
 div
@@ -61,6 +63,11 @@ div
 
 table
   @include table
+.active-row
+  :hover
+    background-color: $color-background2
+    color: $color-text-dark
+
 
 
 

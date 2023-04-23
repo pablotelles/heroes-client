@@ -3,7 +3,7 @@
     <div class="life">
       <div class="life-items">
         <img class="life-icons" src="../../assets/icons/iconLifePoints.png" alt="icone de arma equipada">
-        <span class="life-points">{{ character.calculateLivePoints() }} </span>
+        <span class="life-points">{{ character.livePoins }} </span>
       </div>
       <div class="life-items">
         <span class="xp">{{ character.calculateXp() + 'xp' }}</span>
@@ -12,7 +12,7 @@
     <div class="equip">
       <div class="equip-item">
         <img src="../../assets/icons/iconSword.png" alt="icone de arma equipada">
-        <span class="equip-item-value">+ {{ character.modWeapon() }}</span>
+        <span class="equip-item-value">+ {{ character.equippedWeapon().mod }}</span>
       </div>
       <div class="equip-item">
         <img src="../../assets/icons/iconArmor.png" alt="icone de armadura equipada">
@@ -59,9 +59,10 @@ export default {
         font-size: 30px
         color: $color-accent
         font-weight: bold
+        padding-left: 1.2rem
       .life-points
         font-size: 24px
-        color: $color-test-sucess
+        color: $color-text-sucess
   .equip
     width: 100%
     display: flex

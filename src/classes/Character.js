@@ -6,12 +6,12 @@ import Armor from './Armor'
 export default class Character {
     constructor({_id, name, nickname, birthday, weapons, armor, attributes, keyAttribute, description, status, type}) {
         this._id = _id
-        this.name = name;
-        this.nickname = nickname;
-        this.birthday = birthday;
+        this.name = name
+        this.nickname = nickname
+        this.birthday = birthday
         this.description = description
-        this.status = status;
-        this.type = type;
+        this.status = status
+        this.type = type
         this.livePoins = this.calculateLivePoints()
         this.weapons = weapons.map((weapon) => new Weapon({
           _id: weapon._id, 
@@ -54,43 +54,32 @@ export default class Character {
           return Math.floor((this.calculateAge() - 7) * Math.pow(22, 1.45));
         }
     }
+
     calculateLivePoints() {
       const xp = this.calculateXp()
       const total = xp / 20
       return total.toFixed(0);
     }
+
+    equippedWeapon () {
+      const equippedWeapon = this.weapons.length ? this.weapons.find(weapon => weapon.equipped) : 0;
+      if (equippedWeapon) return equippedWeapon
+      return 0
+    }
+
     calculateAttack() {
-        const modValues = [-2,-2,-2,-2,-2,-2,-2,-2,-1,-1,0,0,1,1,1,2,2,2,3,3];
-        const equippedWeapon = this.modWeapon();
+        const modValues = [-2,-2,-2,-2,-2,-2,-2,-2,-1,-1,0,0,1,1,1,2,2,2,3,3]
+        const equippedWeapon = this.equippedWeapon().mod || 0
         const keyAttr = this.attributes[this.keyAttribute]
         const modIndex = () => {
           if (keyAttr < 0) return 0
           if (keyAttr >= 20) return 19
           return keyAttr
         }
-        const mod = modValues[modIndex()];
-        return 10 + mod + equippedWeapon;
+        const mod = modValues[modIndex()]
+        return 10 + mod + equippedWeapon
     }
-    modWeapon () {
-      const equippedWeapon = this.weapons.length ? this.weapons.find(weapon => weapon.equipped) : 0;
-      if (equippedWeapon) return equippedWeapon.mod
-      return 0
-    }
-    armorDefense () {
-      const equippedArmor = this.armor.length ? this.armor.find(armor => armor.equipped) : 0;
-      if (equippedArmor) return equippedArmor.defense
-      return 0
-    }
-    takeDamage(attackValue) {
-        const defenseValue = 10; // exemplo, a defesa do inimigo é fixa em 10
-        const damageValue = attackValue - defenseValue;
-        if (damageValue > 0) {
-          this.hitPoints -= damageValue;
-          console.log(`O inimigo ${this.name} perdeu ${damageValue} pontos de vida!`);
-        } else {
-          console.log(`O inimigo ${this.name} se esquivou do ataque!`);
-        }
-    }
+
     async equipWeapon(weapon) {
       try {
         const payload = {weaponId: weapon._id, charId: this._id}
@@ -101,4 +90,46 @@ export default class Character {
         return false
       }
     }
+
+    armorDefense () {
+      const equippedArmor = this.armor.length ? this.armor.find(armor => armor.equipped) : 0;
+      if (equippedArmor) return equippedArmor.defense
+      return 0
+    }
+
+    takeDamage(attackValue) {
+        const damageValue = attackValue - this.armorDefense();
+        if (damageValue > 0) {
+          this.livePoins -= damageValue
+          console.log(`O inimigo ${this.name} perdeu ${damageValue} pontos de vida!`)
+        } else {
+          console.log(`O inimigo ${this.name} defendeu o ataque!`)
+        }
+    }
+    battle(enemy) {
+      const myAttack = this.calculateAttack()
+      const enemyAttack = enemy.calculateAttack()
+
+      while (this.livePoins > 0 && enemy.livePoins > 0) {
+        // O personagem atual ataca o inimigo e subtrai os pontos de vida do inimigo
+        enemy.takeDamage(enemyAttack)
+        console.log(`${this.name} atacou ${enemy.name} com um ataque de ${myAttack} pontos. ${enemy.name} agora tem ${enemy.livePoins} pontos de vida.`);
+    
+        // Se o inimigo ainda estiver vivo, ele contra-ataca o personagem atual
+        if (enemy.livePoins > 0) {
+          this.livePoins -= enemyAttack;
+          console.log(`${enemy.name} contra-atacou ${this.name} com um ataque de ${enemyAttack} pontos. ${this.name} agora tem ${this.livePoins} pontos de vida.`);
+        }
+      }
+    
+      // Se o personagem atual estiver morto, ele perdeu a batalha
+      if (this.livePoins <= 0) {
+        console.log(`${this.name} foi derrotado por ${enemy.name}.`);
+      }
+    
+      // Se o inimigo estiver morto, o personagem atual venceu a batalha
+      if (enemy.livePoins <= 0) {
+        console.log(`${this.name} venceu a batalha contra ${enemy.name}.`);
+      }
+    } 
 }

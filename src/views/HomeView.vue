@@ -22,7 +22,7 @@
 import { api } from '@/api/api';
 
 // Class
-import Character from '../Classes/Character'
+import Character from '../classes/Character'
 
 //Components
 import CharacterTable from '@/components/Character/CharacterTable.vue';
@@ -65,6 +65,7 @@ export default {
       })
       const CharactersClass = response.data.map((char) => new Character(char)) 
       this.characterOptions = CharactersClass;
+
     }
     },
   methods: {

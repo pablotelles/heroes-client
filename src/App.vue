@@ -5,8 +5,19 @@
     </router-link>
   </nav>
   <router-view/>
+  <FooterComponent />
 </template>
 
+<script>
+import FooterComponent from "./components/FooterComponent.vue";
+
+export default{
+  name: 'App',
+  components: {
+    FooterComponent
+  }
+}
+</script>
 
 
 <style>
@@ -16,6 +27,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding: 1rem 5% 5rem 5%;
 }
 
 nav a {

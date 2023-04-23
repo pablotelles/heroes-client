@@ -6,7 +6,7 @@
             <tr>
               <th>Nome</th>
               <th>Atributo</th>
-              <th>Modificador</th>
+              <th>Ataque</th>
               <th>Descrição</th>
               <th>Equip</th>
             </tr>
@@ -17,13 +17,13 @@
                   @click="halndleEquipped(weapon)" >
                 {{ weapon.name }}
               </td>
-              <td :class="weapon.equipped === true ? 'weapon-equipped' : ''"
+              <td :class="weapon.equipped === true ? 'weapon-equipped' : ' m'"
                   @click="halndleEquipped(weapon)">
                 {{ weapon.attr }}
               </td>
-              <td :class="weapon.equipped === true ? 'weapon-equipped' : ''"
+              <td :class="weapon.equipped === true ? 'weapon-equipped mod' : 'mod'"
                   @click="halndleEquipped(weapon)">
-                {{ weapon.mod }}
+                 + {{ weapon.mod }}
               </td>
               <td :class="weapon.equipped === true ? 'weapon-equipped' : ''"
                   @click="halndleEquipped(weapon)">
@@ -115,5 +115,7 @@ div
 
     img
       width: 50px
+    .mod
+      text-align: center
 </style>
   

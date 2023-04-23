@@ -48,8 +48,7 @@ export default {
     background-color: $color-background-modal
 
     &-content   
-      min-width: 70%
-      min-height: 30%
+      width: 70%   
       border-radius: 5px
       box-shadow: $box-shadow
       padding: 1.5rem
