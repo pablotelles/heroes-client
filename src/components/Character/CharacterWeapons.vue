@@ -58,8 +58,7 @@
       },
       async halndleEquipped(weapon) {
         await weapon.equipWeapon()
-        this.$emit('updateData')  
-        
+        this.$emit('updateData')        
       },
     },
   }
@@ -112,6 +111,7 @@ div
       font-size: 24px
     .btn-equip
       @include button-open-equip
+      margin: 0 20px
 
     img
       width: 50px

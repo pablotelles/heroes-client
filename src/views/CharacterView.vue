@@ -33,7 +33,7 @@
          <Characterarmor v-show="tabIndex === 1"
                          class="weapons"
                          :character="character"
-                          @updateData="getCharacter" />Characterarmor
+                          @updateData="getCharacter" />
       </TabContainer>
 
     </div>    
@@ -62,9 +62,7 @@ export default {
   name: 'CharacterView',
   components: {
     CreateCharracter,
-    // eslint-disable-next-line
     CharacterWeaponsVue,
-    // eslint-disable-next-line
     Characterarmor,
     CharacterAtributtes,
     CustomModal,
