@@ -135,7 +135,6 @@
         this.form.weaponId = selectedValue
       },
       getWeapons() {
-        console.log('getWeapons')
         api.get('/weapons')
         .then(res => {
         res.data.map(item => {
@@ -150,6 +149,7 @@
       },
       closeModal () {
         this.$emit('closeModal')
+        this.$emit('updateTable')
       }
     }
   }

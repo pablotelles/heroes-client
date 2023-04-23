@@ -6,7 +6,7 @@
           <CustomModal :show="showModal"
                        title="Crie seu Personagem"
                        @closeModal="() => showModal = false">
-            <CreateCharracter @updateTable="getData()" @closeModal="closeModal" />
+            <CreateCharacter @updateTable="getData()" @closeModal="closeModal" />
           </CustomModal>
       </section>
     </div>
@@ -27,7 +27,7 @@ import Character from '../classes/Character'
 //Components
 import CharacterTable from '@/components/Character/CharacterTable.vue';
 import CustomModal from '@/components/CustomModal'
-import CreateCharracter from '@/components/Character/CreateCharracter.vue';
+import CreateCharacter from '@/components/Character/CreateCharacter.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
 
 
@@ -36,7 +36,7 @@ export default {
   components: {
     CharacterTable,
     CustomModal,
-    CreateCharracter,
+    CreateCharacter,
     CustomSelect
   },
   data() {

@@ -16,8 +16,8 @@
         <CustomModal :show="showModal"
                        title="Editar"
                        @closeModal="() => showModal = false" >
-            <CreateCharracter :character="character"
-                              @updateTable="getData()"
+            <CreateCharacter :character="character"
+                              @updateTable="getCharacter"
                               @closeModal="() => showModal = false" />
       </CustomModal>   
       </div>
@@ -52,18 +52,18 @@ import Character from '../classes/Character'
 import { capitalizeFirstLetter } from '@/utils/comuns'
 
 // Components
-import CreateCharracter from '@/components/Character/CreateCharracter.vue'
+import CreateCharacter from '@/components/Character/CreateCharacter.vue'
 import CustomModal from '@/components/CustomModal.vue'
 import CharacterAtributtes from '@/components/Character/CharacterAtributtes.vue'
 import CharacterWeaponsVue from '@/components/Character/CharacterWeapons.vue'
 import Characterarmor from '@/components/Character/CharacterArmor.vue'
-import TabContainer from '@/components/TabContainer.vue';
+import TabContainer from '@/components/TabContainer.vue'
 import CharacterBattleDetails from '@/components/Character/CharacterBattleDetails.vue'
 
 export default {
   name: 'CharacterView',
   components: {
-    CreateCharracter,
+    CreateCharacter,
     CharacterWeaponsVue,
     Characterarmor,
     CharacterAtributtes,
@@ -87,6 +87,7 @@ export default {
         return capitalizeFirstLetter(value)
       },
       getCharacter() {
+        console.log('oi')
         const id = this.$route.params.id
         if (id) {
           api.get(`/knigthts/${id}`).then(response => {
