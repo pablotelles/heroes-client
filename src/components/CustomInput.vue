@@ -8,7 +8,7 @@
            :disabled="disabled"
            @input="setValue($event)"
            @blur="onInput()" />
-    <span v-if="errorState">Campo incorreto ou vazio - mínimo 3 caracteres</span>
+    <span v-if="errorState">{{ errorMsg }}</span>
   </div>
 </template>
 
@@ -38,6 +38,10 @@ export default {
       type: Boolean,
       default: false
     },
+    validateType: {
+      type: String,
+      default: null
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -46,29 +50,38 @@ export default {
   data () {
     return {
       value: null,
-      errorMsg: null,
+      originalValue: null,
+      errorMsg: 'Mínimo 3 caracteres',
       errorState: null,
     }
   },
   watch: {
-    InitialValue () {
-      this.value = this.InitialValue
-    },
     value () {
       this.errorState = null
+      this.errorMsg = 'Mínimo 3 caracteres'
     }
   },
   created () {
     this.value = this.InitialValue
+    this.originalValue = this.InitialValue
   },
   methods: {
     setValue (ev) {
       this.value = ev.target.value
     },
-    onInput() {
-      if (this.require) {
+    async onInput() {
+      if (this.value === this.originalValue) return this.$emit("setInput", this.id, this.value)
+      if (this.require && !this.validateType) {
         const validate = validateInput.required.validate(this.value)
         if (validate) {
+          this.$emit("setInput", this.id, null)
+          return this.errorState = true
+        }
+      }
+      if (this.validateType) {        
+        const validate = await validateInput[this.validateType].validate(this.value)
+        if (validate) {
+          this.errorMsg = validateInput[this.validateType].customMsg
           this.$emit("setInput", this.id, null)
           return this.errorState = true
         }

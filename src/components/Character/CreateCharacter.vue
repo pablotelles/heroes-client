@@ -13,6 +13,7 @@
                    id="nickname"
                    label="Nickname" 
                    type="text"
+                   validate-type="nickname"
                    :require="true"
                    :InitialValue="form.nickname"
                    @setError="setError"

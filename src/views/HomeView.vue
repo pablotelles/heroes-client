@@ -22,7 +22,7 @@
 import { api } from '@/api/api';
 
 // Class
-import Character from '../classes/Character'
+import Character from '@/classes/Character'
 
 //Components
 import CharacterTable from '@/components/Character/CharacterTable.vue';
@@ -60,12 +60,12 @@ export default {
 
       const response = await api.get('/knigthts', {
         params: {
-          status: this.filterSelected
+          status: this.filterSelected,
+    
         }
       })
-      const CharactersClass = response.data.map((char) => new Character(char)) 
+      const CharactersClass = response.data.data.map((char) => new Character(char)) 
       this.characterOptions = CharactersClass;
-
     }
     },
   methods: {
@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/mixins.sass';
+@import '@/styles/mixins.sass';
     .home {
       @include page
       }
