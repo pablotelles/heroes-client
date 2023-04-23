@@ -4,9 +4,11 @@
         <thead>
           <tr>
             <th>Nome</th>
-            <th>Classe</th>
+            <th>Status</th>
+            <th>Class</th>
             <th>Idade</th>
             <th>Armas</th>
+            <th>Armaduras</th>
             <th>Atributo</th>
             <th>Ataque</th>
             <th>Exp</th>
@@ -18,8 +20,10 @@
               @click="redirectToItem(character._id)" >
             <td>{{ character.name }}</td>
             <td>{{ character.status }}</td>
+            <td>{{ character.type }}</td>
             <td>{{ character.calculateAge() }}</td>
             <td>{{ character.weapons.length }}</td>
+            <td>{{ character.armor.length }}</td>
             <td>{{ character.keyAttribute }}</td>
             <td>{{ character.calculateAttack()}}</td>
             <td>{{character.calculateXp() }}</td>
@@ -49,10 +53,15 @@
   }
   </script>
 
-<style lang="scss" scoped>
-@import '../../styles/mixins.sass';
+<style lang="sass" scoped>
+@import '../../styles/mixins.sass'
 
-  table {
-    @include table;
-  }
+div
+  width: 100%
+
+table
+  @include table
+
+
+
 </style>

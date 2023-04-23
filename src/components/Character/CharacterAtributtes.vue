@@ -39,6 +39,7 @@ export default {
 @import '../../styles/variables'
 .character
   max-width: 300px
+  max-height: 450px
   display: flex
   flex-direction: row
   align-items: center

@@ -1,10 +1,11 @@
 <template>
   <div v-if="character" class="character">
     <div class="char-header">
-      <div>
+      <div class="char-infos">
         <h2 class="char-name">{{ character.name + ', ' + character.calculateAge() }}</h2>
         <p class="char-nickname" >{{ `@${character.nickname}` }}</p>
-        <p class="char-status" >{{ capitalize(character.status) }}</p>  
+        <p class="char-status" >{{ capitalize(character.status) }}</p>
+        <CharacterBattleDetails :character="character" />
       </div>
       <div class="char-description">
         <img src="../assets/icons/charIcon.png" alt="">
@@ -19,14 +20,22 @@
                               @closeModal="() => showModal = false" />
       </CustomModal>    
     </div>
-    <div class="secundary-box"> 
+    <div class="secundary-box">
       <CharacterAtributtes class="attributes"
                            :name="character.name"
                            :attributes="character.attributes"
                            :keyAttribute="character.keyAttribute" />
-      <CharacterWeaponsVue class="weapons"
-                           :character="character"
-                           @updateData="getCharacter" />
+      <TabContainer v-if="character" :tabs="tabs" @tabEffects="setTabIndex">
+         <CharacterWeaponsVue v-show="tabIndex === 0"
+                              class="weapons"
+                              :character="character"
+                              @updateData="getCharacter" />
+         <Characterarmor v-show="tabIndex === 1"
+                         class="weapons"
+                         :character="character"
+                          @updateData="getCharacter" />Characterarmor
+      </TabContainer>
+
     </div>    
   </div>
 </template>
@@ -45,19 +54,29 @@ import CreateCharracter from '@/components/Character/CreateCharracter.vue'
 import CustomModal from '@/components/CustomModal.vue'
 import CharacterAtributtes from '@/components/Character/CharacterAtributtes.vue'
 import CharacterWeaponsVue from '@/components/Character/CharacterWeapons.vue'
+import Characterarmor from '@/components/Character/CharacterArmor.vue'
+import TabContainer from '@/components/TabContainer.vue';
+import CharacterBattleDetails from '@/components/Character/CharacterBattleDetails.vue'
 
 export default {
   name: 'CharacterView',
   components: {
     CreateCharracter,
+    // eslint-disable-next-line
     CharacterWeaponsVue,
+    // eslint-disable-next-line
+    Characterarmor,
     CharacterAtributtes,
-    CustomModal
+    CustomModal,
+    TabContainer,
+    CharacterBattleDetails
   },
   data() {
     return {
       character: null,
-      showModal: false
+      showModal: false,
+      tabIndex: 0,
+      tabs: ['Armas', 'Armaduras'],
     }
   },
   created() {
@@ -73,9 +92,15 @@ export default {
           api.get(`/knigthts/${id}`).then(response => {
           const CharacterClass = new Character(response.data)
           this.character = CharacterClass
+          this.tabs[0].props.character = CharacterClass
+          this.tabs[1].props.character = CharacterClass
           })
         }
       },
+      setTabIndex (index) {
+        console.log('index', index)
+        this.tabIndex = index
+      }
   },
 }
 </script>
@@ -96,18 +121,19 @@ export default {
         height: 50px
 
       justify-content: flex-start
-      .char-personal-data
-      .char-name
-        font-size: 40px
-        text-align: left
-      
-      .char-nickname
-        font-size: 26px
-        text-align: left
-      .char-status
-        font-size: 18px
-        text-align: left
-        color: $color-button 
+      .char-infos
+        min-width: 25%
+        .char-name
+          font-size: 40px
+          text-align: left
+        
+        .char-nickname
+          font-size: 26px
+          text-align: left
+        .char-status
+          font-size: 18px
+          text-align: left
+          color: $color-button 
       .char-description
         display: flex
         gap: 2rem
@@ -121,9 +147,7 @@ export default {
       flex-direction: row
       gap: 2rem
       .weapons
-        flex-grow: 1
-
-      
+        flex-grow: 1     
     
       
 

@@ -1,11 +1,12 @@
 import { api } from "@/api/api"
 
 export default class Weapon {
-    constructor({ _id, name, mod, attr, equipped, characterId }) {
+    constructor({ _id, name, mod, attr, equipped, description, characterId }) {
       this._id = _id
       this.name = name;
       this.mod = mod;
       this.attr = attr;
+      this.description = description
       this.equipped = equipped;
       this.characterId = characterId;
     }

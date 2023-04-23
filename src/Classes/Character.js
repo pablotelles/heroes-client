@@ -1,20 +1,34 @@
 import moment from "moment";
 import { api } from "@/api/api";
 import Weapon from './Weapon'
+import Armor from './Armor'
 
 export default class Character {
-    constructor({_id, name, nickname, birthday, weapons, attributes, keyAttribute, status}) {
+    constructor({_id, name, nickname, birthday, weapons, armor, attributes, keyAttribute, description, status, type}) {
         this._id = _id
         this.name = name;
         this.nickname = nickname;
         this.birthday = birthday;
+        this.description = description
         this.status = status;
+        this.type = type;
+        this.livePoins = this.calculateLivePoints()
         this.weapons = weapons.map((weapon) => new Weapon({
           _id: weapon._id, 
           name: weapon.name, 
           mod: weapon.mod, 
-          attr: weapon.attr, 
+          attr: weapon.attr,
+          description: weapon.description,
           equipped: weapon.equipped,
+          characterId: this._id
+        }));
+        this.armor = armor.map((armor) => new Armor({
+          _id: armor._id, 
+          name: armor.name, 
+          defense: armor.defense, 
+          description: armor.description, 
+          equipped: armor.equipped,
+          type: armor.type,
           characterId: this._id
         }));
         this.attributes = attributes;
@@ -40,10 +54,14 @@ export default class Character {
           return Math.floor((this.calculateAge() - 7) * Math.pow(22, 1.45));
         }
     }
-  
+    calculateLivePoints() {
+      const xp = this.calculateXp()
+      const total = xp / 20
+      return total.toFixed(0);
+    }
     calculateAttack() {
         const modValues = [-2,-2,-2,-2,-2,-2,-2,-2,-1,-1,0,0,1,1,1,2,2,2,3,3];
-        const equippedWeapon = this.weapons.length ? this.weapons.find(weapon => weapon.equipped) : 0;
+        const equippedWeapon = this.modWeapon();
         const keyAttr = this.attributes[this.keyAttribute]
         const modIndex = () => {
           if (keyAttr < 0) return 0
@@ -51,10 +69,18 @@ export default class Character {
           return keyAttr
         }
         const mod = modValues[modIndex()];
-        if (!equippedWeapon)  return 10 + mod + 0;
-        return 10 + mod + equippedWeapon.mod;
+        return 10 + mod + equippedWeapon;
     }
-
+    modWeapon () {
+      const equippedWeapon = this.weapons.length ? this.weapons.find(weapon => weapon.equipped) : 0;
+      if (equippedWeapon) return equippedWeapon.mod
+      return 0
+    }
+    armorDefense () {
+      const equippedArmor = this.armor.length ? this.armor.find(armor => armor.equipped) : 0;
+      if (equippedArmor) return equippedArmor.defense
+      return 0
+    }
     takeDamage(attackValue) {
         const defenseValue = 10; // exemplo, a defesa do inimigo é fixa em 10
         const damageValue = attackValue - defenseValue;

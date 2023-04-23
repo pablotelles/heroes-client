@@ -1,40 +1,40 @@
 <template>
-    <div class="weapons" v-if="character">
-      <h2>Armas</h2>
+    <div class="armos" v-if="character">
+      <h2>Armaduras</h2>
         <table>
           <thead>
             <tr>
               <th>Nome</th>
-              <th>Atributo</th>
-              <th>Modificador</th>
+              <th>Defesa</th>
+              <th>Tipo</th>
               <th>Descrição</th>
               <th>Equip</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="weapon in character.weapons" :key="weapon.id">
-              <td :class="weapon.equipped === true ? 'weapon-equipped' : ''"
-                  @click="halndleEquipped(weapon)" >
-                {{ weapon.name }}
+            <tr v-for="armo in character.armor" :key="armo.id">
+              <td :class="armo.equipped === true ? 'armo-equipped' : ''"
+                  @click="handleEquip(armo)" >
+                {{ armo.name }}
               </td>
-              <td :class="weapon.equipped === true ? 'weapon-equipped' : ''"
-                  @click="halndleEquipped(weapon)">
-                {{ weapon.attr }}
+              <td :class="armo.equipped === true ? 'armo-equipped' : ''"
+                  @click="handleEquip(armo)">
+                {{ armo.defense }}
               </td>
-              <td :class="weapon.equipped === true ? 'weapon-equipped' : ''"
-                  @click="halndleEquipped(weapon)">
-                {{ weapon.mod }}
+              <td :class="armo.equipped === true ? 'armo-equipped' : ''"
+                  @click="handleEquip(armo)">
+                {{ armo.type }}
               </td>
-              <td :class="weapon.equipped === true ? 'weapon-equipped' : ''"
-                  @click="halndleEquipped(weapon)">
-                {{ weapon.description }}
+              <td :class="armo.equipped === true ? 'armo-equipped' : ''"
+                  @click="handleEquip(armo)">
+                {{ armo.description }}
               </td>
-              <td :class="weapon.equipped === true ? 'weapon-equipped btn-collumn' : 'btn-collumn'" >
-                  <button v-if="!weapon.equipped" 
+              <td :class="armo.equipped === true ? 'armo-equipped btn-collumn' : 'btn-collumn'" >
+                  <button v-if="!armo.equipped" 
                           class="btn-equip"
-                          @click="halndleEquipped(weapon)">Equipar</button>
-                  <img v-if="weapon.equipped"
-                        src="../../assets/icons/iconSword.png" alt="icone de arama equipada">            
+                          @click="handleEquip(armo)">Equipar</button>
+                  <img v-if="armo.equipped"
+                           src="../../assets/icons/iconArmor.png" alt="icone de arama equipada">            
               </td>
             </tr>
           </tbody>
@@ -45,7 +45,7 @@
   <script>
   // import { api } from '../../api/api'
   export default {
-    name:'CharacterWeapons',
+    name:'CharacterArmo',
     props: {
       character: {
         type: Object,
@@ -53,13 +53,12 @@
       },
     },
     methods: {
-      toggleEquip(weapon) {
-        weapon.equipped = !weapon.equipped
+      toggleEquip(armo) {
+        armo.equipped = !armo.equipped
       },
-      async halndleEquipped(weapon) {
-        await weapon.equipWeapon()
-        this.$emit('updateData')  
-        
+      async handleEquip(armo) {
+        await armo.equipArmor()        
+        this.$emit('updateData')
       },
     },
   }
@@ -107,7 +106,7 @@ div
     .btn-collumn
       text-align: center
       padding: 15px 0
-    .weapon-equipped
+    .armo-equipped
       color: $color-button
       font-size: 24px
     .btn-equip
